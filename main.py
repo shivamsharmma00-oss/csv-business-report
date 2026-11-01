@@ -4,7 +4,6 @@ import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.chart import BarChart, Reference
-from openpyxl.chart.label import DataLabelList
 from openpyxl.utils import get_column_letter
 
 REQUIRED_COLUMNS = ["product", "salesperson", "amount"]
@@ -16,6 +15,12 @@ def load_and_clean(filename):
         raise FileNotFoundError(f"Input file not found: {filename}")
 
     df = pd.read_csv(path)
+    # Normalize headers so variations like ' Product ' or 'PRODUCT' are accepted.
+    df.columns = df.columns.astype("string").str.strip().str.lower()
+    if df.columns.duplicated().any():
+        duplicates = df.columns[df.columns.duplicated()].tolist()
+        raise ValueError(f"Duplicate column names after normalization: {', '.join(duplicates)}")
+
     missing_columns = [c for c in REQUIRED_COLUMNS if c not in df.columns]
     if missing_columns:
         raise ValueError(f"Missing required columns: {', '.join(missing_columns)}")
@@ -82,7 +87,6 @@ def build_report(df, cleaning, output_file):
     light_blue = "D9EAF7"
     pale = "F3F6FA"
     white = "FFFFFF"
-    green = "E2F0D9"
     gray = "667085"
     thin_gray = Side(style="thin", color="D9E1F2")
 
@@ -187,8 +191,6 @@ def build_report(df, cleaning, output_file):
         for row in sheet.iter_rows():
             for cell in row:
                 cell.border = Border(bottom=thin_gray)
-                if cell.column in (2, 3) and cell.row > 1 and "amount" not in str(cell.value).lower():
-                    pass
 
     write_table(products_ws, product_summary)
     write_table(people_ws, person_summary)
@@ -237,7 +239,9 @@ def build_report(df, cleaning, output_file):
     for sheet in [products_ws, people_ws, clean_ws]:
         sheet.sheet_view.showGridLines = False
 
-    wb.save(output_file)
+    output_path = Path(output_file)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(output_path)
     return {
         "total_sales": total_sales,
         "transactions": transactions,
