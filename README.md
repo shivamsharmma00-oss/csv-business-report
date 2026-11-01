@@ -1,27 +1,20 @@
 # Automated Business Sales Reporting System
 
-A Python-based business reporting tool that cleans messy sales CSV data, performs sales analysis, identifies key business insights, and automatically generates a structured Excel report.
+A Python project that cleans messy sales CSV data, analyses sales performance, identifies useful business insights, and automatically creates a formatted Excel report.
 
 ## Features
 
-- Validates required CSV columns
-- Removes duplicate records
-- Handles missing and invalid sales amounts
-- Cleans currency-formatted values such as `₹55,000`
-- Normalizes product and salesperson names
-- Handles missing product and salesperson values
-- Calculates total sales
-- Calculates average sale
-- Calculates median sale
-- Finds the highest and lowest sale
-- Counts the number of transactions
-- Analyzes sales performance by product
-- Analyzes sales performance by salesperson
-- Identifies the top-performing product
-- Identifies the top-performing salesperson
-- Generates an automated Excel business report
-- Creates separate sheets for summary, product analysis, salesperson analysis, and cleaned data
-- Adds formatting and sales visualizations to the Excel report
+- Validates required CSV columns (`product`, `salesperson`, `amount`)
+- Removes duplicate rows
+- Cleans rupee symbols, commas, whitespace, and numeric sales amounts
+- Handles missing or invalid amounts
+- Replaces missing product and salesperson names with `Unknown`
+- Standardises product and salesperson names
+- Calculates total, average, median, highest, and lowest sale
+- Compares revenue and transaction counts by product and salesperson
+- Identifies the top-performing product and salesperson
+- Creates an Excel dashboard with KPI cards, business highlights, data-cleaning checks, and two charts
+- Includes separate product, salesperson, and cleaned-data worksheets
 
 ## Tech Stack
 
@@ -29,131 +22,81 @@ A Python-based business reporting tool that cleans messy sales CSV data, perform
 - Pandas
 - OpenPyXL
 
-## How to Run
+## Setup
 
-### 1. Clone the repository
-
-~~~bash
-git clone https://github.com/shivamsharmma00-oss/csv-business-report.git
-cd csv-business-report
-~~~
-
-### 2. Install dependencies
-
-~~~bash
+```bash
 pip install pandas openpyxl
-~~~
+```
 
-### 3. Run the program
+## Run
 
-~~~bash
+```bash
+python main.py sample_sales_messy.csv
+```
+
+Or provide a different CSV file:
+
+```bash
+python main.py your_sales_file.csv --output your_report.xlsx
+```
+
+If no filename is provided, the program prompts for one:
+
+```bash
 python main.py
-~~~
+```
 
-The program will ask for the CSV filename:
+The output workbook defaults to `sales_business_report.xlsx`.
 
-~~~text
-Enter CSV filename:
-~~~
+## Input format
 
-For example:
+The CSV must contain these columns:
 
-~~~text
-sales.csv
-~~~
-
-The program will then clean the data, perform the analysis, display a business report in the terminal, and generate:
-
-~~~text
-sales_business_report.xlsx
-~~~
-
-## Input Format
-
-The program expects a CSV file containing these required columns:
-
-~~~csv
+```csv
 product,salesperson,amount
 Laptop,Rahul,55000
-Mouse,Priya,2500
+Mouse,Priya,"₹2,500"
 Keyboard,Aman,4000
-~~~
+```
 
-The program validates these required columns before processing the data.
+## Cleaning behaviour
 
-## Data Cleaning
+- Exact duplicate rows are removed.
+- Currency symbols and thousands separators are removed before numeric conversion.
+- Amounts that cannot be converted to numbers are excluded from the analysis.
+- Missing or blank product and salesperson names are labelled `Unknown`.
+- Names are trimmed and converted to title case.
 
-The pipeline handles common problems found in real-world CSV data, including:
+The workbook's Dashboard sheet reports the number of received, duplicate, invalid, valid, and removed records.
 
-- Duplicate records
-- Missing values
-- Invalid numeric values
-- Currency symbols
-- Commas in currency values
-- Extra whitespace
-- Inconsistent capitalization
-- Missing product or salesperson names
+## Excel workbook
 
-Invalid sales amounts are converted to missing values and excluded from the financial calculations.
+The generated workbook contains four sheets:
 
-## Generated Excel Report
+1. **Dashboard** – KPI cards, business highlights, data-quality summary, revenue-by-product chart, and revenue-by-salesperson chart.
+2. **Sales by Product** – revenue, average sale, and transaction count for each product.
+3. **Sales by Salesperson** – revenue, average sale, and transaction count for each salesperson.
+4. **Cleaned Data** – the cleaned records used for analysis.
 
-The generated Excel workbook contains four sheets.
+## Project structure
 
-### Summary
-
-Contains key business metrics and automatically calculated business insights.
-
-### Sales by Product
-
-Contains:
-
-- Total sales
-- Average sale
-- Number of transactions
-
-for each product.
-
-### Sales by Salesperson
-
-Contains:
-
-- Total sales
-- Average sale
-- Number of transactions
-
-for each salesperson.
-
-### Cleaned Data
-
-Contains the cleaned dataset used for the final analysis.
-
-## Project Structure
-
-~~~text
-csv-business-report/
+```text
+Automated_Business_Sales_Reporting_System/
 ├── main.py
-├── sales.csv
+├── sample_sales_messy.csv
 ├── README.md
-└── .gitignore
-~~~
+└── sales_business_report.xlsx
+```
 
-## Example Use Case
+## Example workflow
 
-This project demonstrates how a business can automate a repetitive reporting workflow:
+```text
+Raw CSV
+  -> Column validation
+  -> Data cleaning
+  -> Sales analysis
+  -> Business insights
+  -> Excel dashboard and detailed worksheets
+```
 
-~~~text
-Raw CSV Data
-     ↓
-Validation
-     ↓
-Data Cleaning
-     ↓
-Business Analysis
-     ↓
-Business Insights
-     ↓
-Automated Excel Report
-~~~
-
-Instead of manually cleaning sales data and preparing reports, the entire workflow can be executed with a single Python program.
+This project demonstrates how a repetitive sales-reporting workflow can be automated with Python and Excel.
