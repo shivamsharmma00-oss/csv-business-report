@@ -82,13 +82,16 @@ The generated workbook contains four sheets:
 
 ## Project structure
 
-```text
-Automated_Business_Sales_Reporting_System/
-├── main.py
-├── sample_sales_messy.csv
+csv-business-report/
+├── .gitignore
 ├── README.md
-└── sales_business_report.xlsx
-```
+├── dashboard.png
+├── main.py
+├── requirements.txt
+├── sales.csv
+├── sales_business_report.xlsx
+└── sample_sales_messy.csv
+
 
 ## Example workflow
 
