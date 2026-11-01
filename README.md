@@ -25,7 +25,7 @@ A Python project that cleans messy sales CSV data, analyses sales performance, i
 ## Setup
 
 ```bash
-pip install pandas openpyxl
+pip install -r requirements.txt
 ```
 
 ## Run
