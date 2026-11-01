@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ## Run
 
 ```bash
-python main.py sample_sales_messy.csv
+python main.py Sample Sales.csv
 ```
 
 Or provide a different CSV file:
@@ -46,7 +46,7 @@ If no filename is provided, the program prompts for one:
 python main.py
 ```
 
-The output workbook defaults to `sales_business_report.xlsx`.
+The output workbook defaults to `Sales Business Report.xlsx`.
 
 ## Input format
 
@@ -89,8 +89,8 @@ csv-business-report/
 ├── main.py
 ├── requirements.txt
 ├── sales.csv
-├── sales_business_report.xlsx
-└── sample_sales_messy.csv
+├── Sales Business Report.xlsx
+└── Sample Sales.csv
 
 
 ## Example workflow
