@@ -69,6 +69,8 @@ Keyboard,Aman,4000
 
 The workbook's Dashboard sheet reports the number of received, duplicate, invalid, valid, and removed records.
 
+![Excel Dashboard](dashboard.png)
+
 ## Excel workbook
 
 The generated workbook contains four sheets:
