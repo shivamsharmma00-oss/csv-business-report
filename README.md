@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ## Run
 
 ```bash
-python main.py Sample Sales.csv
+python main.py "Sample Sales.csv"
 ```
 
 Or provide a different CSV file:
