@@ -253,7 +253,7 @@ def build_report(df, cleaning, output_file):
 def main():
     parser = argparse.ArgumentParser(description="Clean sales CSV data and generate an Excel business report.")
     parser.add_argument("input_csv", nargs="?", help="Path to the input CSV file")
-    parser.add_argument("-o", "--output", default="sales_business_report.xlsx", help="Output Excel workbook")
+    parser.add_argument("-o", "--output", default="Sales Business Report.xlsx", help="Output Excel workbook")
     args = parser.parse_args()
 
     filename = args.input_csv or input("Enter CSV filename: ").strip()
